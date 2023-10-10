@@ -1,0 +1,21 @@
+name: Conditional Manual Job Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      triggerSpecificJob:
+        description: 'Run specific job only?'
+        required: false
+        default: 'false'
+
+jobs:
+  always_run_job:
+    runs_on: ubuntu-latest
+    steps:
+    - run: echo "This job always runs."
+
+  manually_triggered_job:
+    if: github.event.inputs.triggerSpecificJob == 'true'
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "This job runs only if the input is set to true."
